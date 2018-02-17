@@ -69,9 +69,30 @@
       alert: "This man's marbles are long gone."
     }];
 
+
+    // helper function to get each skill separately into list element
+    function getSkills(skills) {
+      const skillMarkup = [];
+      skills.forEach(skill => {
+        skillMarkup.push(<li>{skill}</li>);
+      });
+
+      return skillMarkup;
+
+    }
+
+
     const profiles = data.map((profile) => {
-      // YOUR CODE GOES HERE!
-      // Take in a profile object and return some markup
+      return (
+        <div className='profile'>
+          {profile.alert && (<p className='alert'>{profile.alert}</p>)}
+          <img src={profile.imgSrc}/>
+          <h4>{profile.name}</h4>
+            <ul>
+              {getSkills(profile.skills)}
+            </ul>
+        </div>
+      )
     });
 
     const profilesSection = (<div className='profiles'>
