@@ -1,55 +1,114 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello React</title>
-    <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-  </head>
-  <body>
-    <div id="root">
-      <div>
-        <p><button>Click to Alert "Hello!"</button></p>
-        <hr/>
-        <!-- Use a form submit to alert the message "Your name is ____ and you like to eat ____." -->
-        <form>
-          <p>
-            <label>Name</label>
-            <input type='text'/>
-          </p>
-          <p>
-            <label>Favorite Food</label>
-            <input type='text'/>
-          </p>
-          <p><button type='submit'>Click to alert</button></p>
-        </form>
-        <hr/>
-        <!-- These lis should be generated from the "names" array below. -->
-        <ul>
-          <li>Joel <button>Greet</button></li>
-          <li>Don <button>Greet</button></li>
-        </ul>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root">
+    <div>
+      <p>
+        <button id='hello'>Click to Alert "Hello!"</button>
+      </p>
+      <hr/>
+      <!-- Use a form submit to alert the message "Your name is ____ and you like to eat ____." -->
+      <form>
+        <p>
+          <label>Name</label>
+          <input type='text' />
+        </p>
+        <p>
+          <label>Favorite Food</label>
+          <input type='text' />
+        </p>
+        <p>
+          <button type='submit'>Click to alert</button>
+        </p>
+      </form>
+      <hr/>
+      <!-- These lis should be generated from the "names" array below. -->
+      <ul>
+        <li>Joel
+          <button>Greet</button>
+        </li>
+        <li>Don
+          <button>Greet</button>
+        </li>
+      </ul>
     </div>
-    <script type="text/babel">
-
-    const button = // Create the button onClick handler
+  </div>
+  
+  <script type="text/babel">
     
-    const form = // Create the form with onSubmit handler
+    const root = document.getElementById('root');
 
-    const names = ['Joel', 'Don', 'Khurram', 'David', 'Karl', 'Rosy'];
+    const alertHello = () => {
+      alert('Hello!');
+    }
+
+    const button = (
+      <button onClick={alertHello}>click this</button>
+    );
+
+
+    const onSubmit = (evt) => {
+      
+      evt.preventDefault();
+
+      const form = evt.target;
+      const name = form.elements.name;
+      const favoriteFood = form.elements.favoriteFood;
+
+      alert(`Your name is ${name.value} and you like ${favoriteFood.value}`);
+
+      // name.value = favoriteFood.value = '';
+
+    };
+
+
+    const form = (
+    <form onSubmit={onSubmit}>
+      <div><label>Name</label>
+      <input name='name' type='text'/>
+      </div >
+
+      <div><label>Favorite Food</label>
+      <input name='favoriteFood' type='text'/>
+      </div>
+
+      <div>
+        <button type='submit'>Click to alert</button>
+      </div>
+    </form>);
+
+
+    
+    const names = ['Joel', 'Don', 'Khurram', 'David', 'Karl', 'Rosy']; 
+
+    const greetPerson = (name) => {
+      alert(`Hello, ${name}!!`);
+    };   
+
     const listItems = names.map(name => {
-      // Return an li element for each name
-    });
-
+      return <li>{name}
+      <button onClick={() => greetPerson(name)}>Greet</button>
+      </li>
+    }); 
+    
     const list = <ul>{listItems}</ul>
 
-    reactDOM.render(<div>
-      {button}
+    ReactDOM.render(<div>
+      {button} 
       {form}
       {list}
-    </div>)
-    </script>
-  </body>
+    </div>, root);
+
+  </script>
+</body>
+
 </html>
